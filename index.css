@@ -1,0 +1,1658 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ADMIZ AGENCY — World-Class Premium Design System
+   Aesthetic Reference: Linear · Stripe · Apple · Vercel · OpenAI · Arc
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ── 0. DESIGN TOKENS ──────────────────────────────────────────────────── */
+:root {
+
+  /* Surface Hierarchy (dark → light) */
+  --bg-base        : #0c0c11;           /* page base — deep cool dark   */
+  --surface-0      : rgba(255,255,255, 0.015);
+  --surface-1      : rgba(255,255,255, 0.030);
+  --surface-2      : rgba(255,255,255, 0.048);
+  --surface-3      : rgba(255,255,255, 0.070);
+
+  /* Glass System */
+  --glass          : rgba(10, 10, 16, 0.60);
+  --glass-border   : rgba(255, 255, 255, 0.068);
+  --glass-hover    : rgba(255, 255, 255, 0.110);
+  --glass-active   : rgba(255, 255, 255, 0.190);
+  --glass-specular : rgba(255, 255, 255, 0.060);   /* top-edge shimmer  */
+
+  /* Brand — warm sienna / copper */
+  --brand          : #c2775d;
+  --brand-light    : #d9947a;
+  --brand-dim      : rgba(194, 119, 93,  0.10);
+  --brand-glow     : rgba(194, 119, 93,  0.22);
+
+  /* Emerald — success / data positive */
+  --emerald        : #10b981;
+  --emerald-light  : #34d399;
+  --emerald-dim    : rgba(16,  185, 129, 0.09);
+  --emerald-glow   : rgba(16,  185, 129, 0.20);
+
+  /* Indigo — budget / retargeting */
+  --indigo         : #6477e8;
+  --indigo-dim     : rgba(100, 119, 232, 0.10);
+
+  /* Error */
+  --error          : #f43f5e;
+
+  /* Neutral scale — warm-tinted grays */
+  --n0  : #ffffff;
+  --n50 : #eae6e0;   /* primary text */
+  --n100: #c5c0b9;   /* secondary text */
+  --n300: #7d786f;   /* muted */
+  --n500: #47433d;   /* very muted / hairlines */
+  --n700: #221f1b;   /* deep card surfaces */
+  --n900: #100d0a;   /* darkest local surface */
+
+  /* Typography */
+  --font-display : 'Outfit', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+  --font-body    : 'Inter',  'SF Pro Text',    system-ui, -apple-system, sans-serif;
+
+  /* Spacing — 4px base grid */
+  --sp1:  4px;  --sp2:  8px;  --sp3: 12px;  --sp4: 16px;
+  --sp5: 20px;  --sp6: 24px;  --sp8: 32px;  --sp10: 40px;
+
+  /* Border radius */
+  --r-xs   : 6px;
+  --r-sm   : 10px;
+  --r-md   : 14px;
+  --r-lg   : 20px;
+  --r-xl   : 26px;
+  --r-pill : 999px;
+
+  /* Easing curves */
+  --ease        : cubic-bezier(0.16, 1, 0.3, 1);       /* fast-out-slow-in */
+  --ease-spring : cubic-bezier(0.34, 1.56, 0.64, 1);   /* slight overshoot */
+  --ease-std    : cubic-bezier(0.4, 0, 0.2, 1);         /* material std     */
+
+  /* Card Shadow — layered depth */
+  --card-shadow:
+    0 1px  0   0   var(--glass-specular) inset,
+    0 0    0   1px var(--glass-border),
+    0 2px  6px     rgba(0, 0, 0, 0.35),
+    0 8px  28px    rgba(0, 0, 0, 0.38),
+    0 40px 100px   rgba(0, 0, 0, 0.30);
+
+  /* Subcard shadow */
+  --sub-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.30),
+    0 4px 12px rgba(0, 0, 0, 0.20);
+
+  /* Glow effects */
+  --glow-brand   : 0 0 16px var(--brand-glow),   0 0 4px var(--brand-dim);
+  --glow-emerald : 0 0 14px var(--emerald-glow),  0 0 4px var(--emerald-dim);
+
+  /* ── Legacy aliases — keeps JS inline styles working without changes ── */
+  --accent-copper      : var(--brand);
+  --accent-copper-glow : var(--brand-glow);   /* used in insight card highlight */
+  --accent-emerald     : var(--emerald);
+  --accent-red         : var(--error);
+  --border-color       : var(--glass-border);
+  --text-dark          : #060509;
+  --text-muted         : var(--n300);         /* used in leads metric span      */
+}
+
+
+/* ── 1. BASE RESET ─────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  height: 100%;
+  font-size: 16px;
+}
+
+
+/* ── 2. PAGE BACKGROUND SYSTEM ─────────────────────────────────────────── */
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  color: var(--n50);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  position: relative;
+  padding: var(--sp6) var(--sp4) var(--sp10);
+}
+
+/* Layer 1: Fine grain noise texture (tactile, handcrafted feel) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.030;
+  mix-blend-mode: overlay;
+}
+
+/* Layer 2: Subtle dot grid (Vercel / Linear aesthetic) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+  /* Vignette the grid so it fades at edges */
+  -webkit-mask-image:
+    radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 100%);
+  opacity: 0.22;
+}
+
+/* Background ambient glow canvas — sits behind everything */
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  will-change: transform;
+}
+
+/* Warm copper light — upper left quadrant */
+.bg-glow--warm {
+  width: 60vw;
+  height: 60vw;
+  top: -18%;
+  left: -12%;
+  background: radial-gradient(circle,
+    rgba(194, 119, 93, 0.10) 0%,
+    rgba(194, 119, 93, 0.04) 40%,
+    transparent 70%
+  );
+  animation: floatWarm 26s ease-in-out infinite;
+}
+
+/* Cool indigo light — lower right */
+.bg-glow--cool {
+  width: 55vw;
+  height: 55vw;
+  bottom: -18%;
+  right: -12%;
+  background: radial-gradient(circle,
+    rgba(100, 119, 232, 0.07) 0%,
+    rgba(16, 185, 129, 0.03) 45%,
+    transparent 70%
+  );
+  animation: floatCool 30s ease-in-out infinite reverse;
+}
+
+@keyframes floatWarm {
+  0%, 100% { transform: translate(0, 0)   scale(1);    }
+  33%       { transform: translate(3%, -4%) scale(1.06); }
+  66%       { transform: translate(-2%, 3%) scale(0.97); }
+}
+
+@keyframes floatCool {
+  0%, 100% { transform: translate(0, 0)   scale(1);    }
+  40%       { transform: translate(-3%, 2%) scale(1.05); }
+  70%       { transform: translate(2%, -3%) scale(0.98); }
+}
+
+
+/* ── 3. APP CONTAINER & LAYOUT ─────────────────────────────────────────── */
+
+.app-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp5);
+}
+
+
+/* ── 4. HEADER ─────────────────────────────────────────────────────────── */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--sp5);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.header-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.18rem;
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.logo-accent {
+  color: var(--n0);
+  font-weight: 800;
+}
+
+.logo-sep {
+  color: var(--n500);
+  font-weight: 300;
+  margin: 0 2px;
+}
+
+.logo-main {
+  color: var(--n300);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  font-size: 0.85em;
+}
+
+.header-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp2);
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  padding: 5px 13px;
+  transition: border-color 0.2s;
+}
+
+.header-status:hover {
+  border-color: var(--glass-hover);
+}
+
+.status-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 8px var(--emerald);
+  flex-shrink: 0;
+}
+
+.animate-pulse {
+  animation: statusPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 6px  var(--emerald); }
+  50%       { opacity: 0.5; box-shadow: 0 0 14px var(--emerald); }
+}
+
+.status-text {
+  font-size: 0.71rem;
+  font-weight: 500;
+  color: var(--n100);
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+
+/* ── 5. MAIN GRID ──────────────────────────────────────────────────────── */
+
+.app-main-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 370px 1fr;
+  gap: var(--sp5);
+  min-height: 640px;
+}
+
+
+/* ── 6. GLASS CARD SYSTEM ──────────────────────────────────────────────── */
+
+.glass-card {
+  background: var(--glass);
+  border-radius: var(--r-xl);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(36px) saturate(180%);
+  -webkit-backdrop-filter: blur(36px) saturate(180%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  /* Subtle border — handled in box-shadow for layering control */
+  border: 1px solid var(--glass-border);
+  transition: border-color 0.35s var(--ease);
+}
+
+/* Top-edge specular shimmer — the hallmark of quality glassmorphism */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--r-xl);
+  right: var(--r-xl);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--glass-specular) 25%,
+    var(--glass-specular) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subcard — inner panels */
+.glass-subcard {
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  padding: var(--sp4);
+  transition:
+    background  0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    box-shadow  0.22s var(--ease),
+    transform   0.22s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-subcard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255,255,255,0.025) 0%, transparent 55%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s;
+}
+
+.glass-subcard:hover {
+  background: var(--surface-1);
+  border-color: var(--glass-hover);
+  box-shadow: var(--sub-shadow);
+}
+
+.glass-subcard:hover::after {
+  opacity: 1;
+}
+
+
+/* ── 7. STRATEGY DASHBOARD (Left Panel) ────────────────────────────────── */
+
+.strategy-panel {
+  padding: var(--sp6);
+  gap: var(--sp5);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp3);
+}
+
+.panel-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--surface-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-xs);
+  color: var(--n300);
+}
+
+.panel-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--n50);
+}
+
+.panel-intro {
+  font-size: 0.79rem;
+  color: var(--n300);
+  line-height: 1.6;
+}
+
+
+/* ── 8. READINESS SCORE GAUGE ──────────────────────────────────────────── */
+
+.readiness-gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp3);
+  padding: var(--sp2) 0;
+}
+
+.gauge-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  /* Diffuse glow behind the ring arc */
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.28));
+}
+
+.progress-ring__circle-bg {
+  stroke: rgba(255, 255, 255, 0.04);
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.95s var(--ease);
+}
+
+.gauge-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
+#readiness-score {
+  font-family: var(--font-display);
+  font-size: 2.0rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--n0);
+  line-height: 1;
+  /* Tabular numbers for smooth counting animation */
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-percent {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--emerald);
+  align-self: flex-end;
+  padding-bottom: 5px;
+}
+
+.gauge-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--n300);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+
+/* ── 9. METRICS GRID ───────────────────────────────────────────────────── */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp3);
+}
+
+.col-span-2 { grid-column: span 2; }
+
+.metric-label {
+  font-size: 0.60rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--n300);
+  margin-bottom: var(--sp2);
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--n0);
+  line-height: 1.1;
+  transition: color 0.3s var(--ease);
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-value.value-small {
+  font-family: var(--font-body);
+  font-size: 0.80rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--brand-light);
+  line-height: 1.45;
+}
+
+
+/* ── 10. BUDGET ALLOCATION BARS ────────────────────────────────────────── */
+
+.budget-bar-wrapper { margin-top: var(--sp2); }
+
+.budget-bar {
+  display: flex;
+  align-items: stretch;
+  height: 5px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: var(--sp3);
+  gap: 1.5px;
+}
+
+.budget-fill {
+  height: 100%;
+  transition: width 0.85s var(--ease);
+  border-radius: var(--r-pill);
+}
+
+.testing-fill    { background: var(--brand);    }
+.scaling-fill    { background: var(--emerald);  }
+.retargeting-fill { background: var(--indigo);  }
+
+.budget-legend {
+  display: flex;
+  gap: var(--sp4);
+  font-size: 0.68rem;
+  color: var(--n300);
+}
+
+.budget-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-test     { background: var(--brand);   }
+.dot-scale    { background: var(--emerald); }
+.dot-retarget { background: var(--indigo);  }
+
+
+/* ── 11. CAMPAIGN INSIGHTS BOX ─────────────────────────────────────────── */
+
+.insights-box {
+  margin-top: auto;
+  border-left: 2px solid var(--emerald);
+}
+
+.insights-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp2);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--emerald);
+  margin-bottom: var(--sp2);
+}
+
+.insight-text {
+  font-size: 0.78rem;
+  color: var(--n100);
+  line-height: 1.65;
+  transition: color 0.3s var(--ease);
+}
+
+
+/* ── 12. CHATBOT PANEL (Right Panel) ───────────────────────────────────── */
+
+.chatbot-panel {
+  /* inherits glass-card */
+  min-height: 580px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp3);
+  padding: var(--sp4) var(--sp5);
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.010);
+  flex-shrink: 0;
+}
+
+/* AI avatar — gradient ring */
+.agent-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  background: var(--surface-1);
+  border: 1px solid var(--glass-border);
+  color: var(--n100);
+  z-index: 0;
+}
+
+/* Animated gradient ring around the avatar — "alive" feel */
+.avatar-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--r-sm) + 2px);
+  background: linear-gradient(
+    135deg,
+    var(--brand) 0%,
+    transparent 45%,
+    var(--emerald) 100%
+  );
+  z-index: -1;
+  opacity: 0.5;
+  animation: avatarRing 4s ease-in-out infinite alternate;
+}
+
+@keyframes avatarRing {
+  0%   { opacity: 0.3; filter: blur(0px);   }
+  100% { opacity: 0.65; filter: blur(0.5px); }
+}
+
+.agent-info h3 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--n50);
+  letter-spacing: -0.008em;
+}
+
+.agent-info p {
+  font-size: 0.70rem;
+  color: var(--n300);
+  margin-top: 1px;
+  font-weight: 400;
+}
+
+/* ── Progress Bar ──────────────────────────── */
+
+.chat-progress-container {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.025);
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.chat-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 45%, var(--emerald) 100%);
+  transition: width 0.55s var(--ease);
+  position: relative;
+}
+
+/* Glowing tip — like a laser pointer moving across the bar */
+.chat-progress-bar::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--emerald-light);
+  box-shadow: 0 0 8px var(--emerald), 0 0 3px var(--emerald-light);
+  transition: opacity 0.3s, right 0.55s var(--ease);
+}
+
+
+/* ── 13. CHAT BODY & SCROLLING ─────────────────────────────────────────── */
+
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp4);
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar — minimal macOS-style */
+.chat-body::-webkit-scrollbar        { width: 3px; }
+.chat-body::-webkit-scrollbar-track  { background: transparent; }
+.chat-body::-webkit-scrollbar-thumb  {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-pill);
+}
+.chat-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+
+/* ── 14. CHAT MESSAGES ─────────────────────────────────────────────────── */
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 84%;
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: msgReveal 0.38s var(--ease) forwards;
+}
+
+@keyframes msgReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-message.bot  { align-self: flex-start; }
+.chat-message.user { align-self: flex-end; }
+
+.message-bubble {
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* Bot bubble — frosted glass, understated */
+.bot .message-bubble {
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  color: var(--n50);
+  border-top-left-radius: 4px;
+}
+
+/* User bubble — warm brand gradient */
+.user .message-bubble {
+  background: linear-gradient(145deg, var(--brand) 0%, #a25944 100%);
+  color: #ffe8dc;
+  border-top-right-radius: 4px;
+  font-weight: 500;
+  /* Subtle glow that communicates "sent" confidence */
+  box-shadow: 0 2px 10px rgba(194, 119, 93, 0.22);
+}
+
+.message-time {
+  font-size: 0.62rem;
+  color: var(--n500);
+  margin-top: 4px;
+  padding: 0 3px;
+  letter-spacing: 0.02em;
+}
+
+.bot  .message-time { align-self: flex-start; }
+.user .message-time { align-self: flex-end;   }
+
+
+/* ── 15. TYPING INDICATOR ──────────────────────────────────────────────── */
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 11px 15px;
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  border-top-left-radius: 4px;
+  width: fit-content;
+  /* Same reveal animation as a message */
+  opacity: 0;
+  animation: msgReveal 0.3s var(--ease) forwards;
+}
+
+.typing-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--n300);
+  border-radius: 50%;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(1) { animation-delay: 0.00s; }
+.typing-dot:nth-child(2) { animation-delay: 0.18s; }
+.typing-dot:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes typingBounce {
+  0%, 70%, 100% { transform: translateY(0);    opacity: 0.35; }
+  35%            { transform: translateY(-5px); opacity: 1.0;  }
+}
+
+
+/* ── 16. CHAT CONTROLS AREA ────────────────────────────────────────────── */
+
+.chat-controls-area {
+  padding: var(--sp4) var(--sp5) var(--sp5);
+  border-top: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.14);
+  flex-shrink: 0;
+}
+
+
+/* ── 17. OPTION BUTTONS ────────────────────────────────────────────────── */
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp2);
+}
+
+.option-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  color: var(--n100);
+  font-family: var(--font-body);
+  font-size: 0.80rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  user-select: none;
+
+  /* Staggered reveal — delay applied inline from JS */
+  opacity: 0;
+  transform: translateY(7px);
+  animation: optionReveal 0.32s var(--ease) forwards;
+
+  /* Hover transitions */
+  transition:
+    background    0.18s var(--ease),
+    border-color  0.18s var(--ease),
+    color         0.18s var(--ease),
+    transform     0.20s var(--ease),
+    box-shadow    0.18s var(--ease);
+}
+
+/* Inner shimmer layer (materialises on hover) */
+.option-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.18s;
+  pointer-events: none;
+}
+
+.option-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--glass-hover);
+  color: var(--n50);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.30);
+}
+
+.option-btn:hover::before { opacity: 1; }
+
+.option-btn:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: none;
+  background: var(--surface-1);
+}
+
+@keyframes optionReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── 18. TEXT INPUT & SEND BUTTON ──────────────────────────────────────── */
+
+.input-container {
+  display: flex;
+  gap: var(--sp2);
+  opacity: 0;
+  transform: translateY(7px);
+  animation: optionReveal 0.30s var(--ease) forwards;
+}
+
+.text-input {
+  flex: 1;
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  color: var(--n50);
+  padding: 11px 14px;
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  outline: none;
+  transition:
+    border-color 0.20s,
+    background   0.20s,
+    box-shadow   0.20s;
+}
+
+.text-input::placeholder { color: var(--n500); }
+
+.text-input:focus {
+  border-color: var(--glass-active);
+  background: var(--surface-1);
+  /* Soft focus halo */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.040);
+}
+
+.send-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--n50);
+  color: var(--bg-base);
+  border: none;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition:
+    background  0.16s,
+    transform   0.16s var(--ease),
+    box-shadow  0.16s;
+}
+
+.send-btn svg { display: block; }
+
+.send-btn:hover {
+  background: var(--n0);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.12);
+}
+
+.send-btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+
+/* ── 19. LEAD CAPTURE FORM ─────────────────────────────────────────────── */
+
+.lead-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: optionReveal 0.34s var(--ease) forwards;
+}
+
+.lead-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.lead-form-group label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.075em;
+  color: var(--n300);
+}
+
+.input-feedback {
+  font-size: 0.70rem;
+  color: var(--error);
+  display: none;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+
+/* ── 20. SUCCESS STATE ─────────────────────────────────────────────────── */
+
+/* The success-card class is placed on a .message-bubble element by JS */
+.success-card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--sp10) var(--sp5) var(--sp8);
+  background: transparent !important;
+  border-color: transparent !important;
+  animation: successReveal 0.50s var(--ease) forwards;
+}
+
+@keyframes successReveal {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+.success-icon-wrap {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: var(--sp4);
+  /* background and border set inline by JS */
+}
+
+.success-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--n0);
+  margin-bottom: var(--sp2);
+}
+
+.success-card > p {
+  font-size: 0.82rem;
+  color: var(--n100);
+  line-height: 1.6;
+  margin-bottom: var(--sp4);
+  max-width: 280px;
+}
+
+/* The WhatsApp CTA link (rendered by JS with class="option-btn" + inline style) */
+/* We override inline styles via specificity where needed */
+.success-card a.option-btn {
+  animation-delay: 0.25s !important;
+  border-radius: var(--r-md) !important;
+  padding: 13px 24px !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+}
+
+
+/* ── 21. DASHBOARD PULSE ANIMATION ─────────────────────────────────────── */
+
+.pulse-glow-highlight {
+  animation: cardHighlight 0.75s var(--ease);
+}
+
+@keyframes cardHighlight {
+  0%   {
+    border-color: rgba(255, 255, 255, 0.22);
+    background:   var(--surface-2);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+  }
+  100% {
+    border-color: var(--glass-border);
+    background:   var(--surface-0);
+    box-shadow: none;
+  }
+}
+
+
+/* ── 22. FOOTER ────────────────────────────────────────────────────────── */
+
+.app-footer {
+  padding: var(--sp3) 0;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+.app-footer p {
+  font-size: 0.67rem;
+  color: var(--n500);
+  letter-spacing: 0.025em;
+}
+
+
+/* ── 23. SCROLLBAR (Global) ────────────────────────────────────────────── */
+
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+
+/* ── 26. SOCIAL PROOF STRIP ─────────────────────────────────────────────── */
+
+.proof-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--sp4);
+  padding: var(--sp3) var(--sp5);
+  background: var(--surface-0);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+
+  /* Subtle top shimmer like the glass cards */
+  position: relative;
+  overflow: hidden;
+}
+
+.proof-strip::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-specular) 40%, var(--glass-specular) 60%, transparent);
+  pointer-events: none;
+}
+
+.proof-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  text-align: center;
+}
+
+.proof-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.proof-number {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--n0);
+  font-variant-numeric: tabular-nums;
+  /* Counts up from 0 — JS will update this */
+}
+
+.proof-prefix,
+.proof-unit {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-light);
+}
+
+.proof-unit { margin-left: 1px; }
+
+.proof-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--n300);
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.proof-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--glass-border);
+  flex-shrink: 0;
+}
+
+
+/* ── 27. URGENCY SLOT BADGE ──────────────────────────────────────────────── */
+
+.slot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  flex-shrink: 0;
+  background: rgba(245, 158, 11, 0.07);
+  border: 1px solid rgba(245, 158, 11, 0.20);
+  border-radius: var(--r-pill);
+  padding: 5px 10px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #f59e0b;
+  /* Revealed by JS after slot count is computed */
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  white-space: nowrap;
+}
+
+/* Animated amber pulse dot */
+.slot-pulse {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+  flex-shrink: 0;
+  animation: slotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes slotPulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    box-shadow: 0 0 4px rgba(245,158,11,0.4); }
+  50%       { opacity: 0.6; transform: scale(1.25); box-shadow: 0 0 10px rgba(245,158,11,0.7); }
+}
+
+
+/* ── 28. RESULTS TICKER ──────────────────────────────────────────────────── */
+
+.results-ticker {
+  /* Sits between metrics and insights in the dashboard panel */
+}
+
+.ticker-label {
+  font-size: 0.60rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--n300);
+  margin-bottom: var(--sp2);
+}
+
+/* Visible window — hides overflow to create the scrolling illusion */
+.ticker-viewport {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  /* Fade edges on desktop for a premium feel */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+/* The scrolling strip — two copies side-by-side for infinite loop */
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: var(--sp4);
+  width: max-content;
+  animation: tickerScroll 26s linear infinite;
+  /* Pause on hover so users can read */
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  color: var(--n100);
+  white-space: nowrap;
+}
+
+.ticker-niche {
+  font-weight: 600;
+  color: var(--n50);
+}
+
+.ticker-sep {
+  color: var(--n500);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin: 0 var(--sp1);
+}
+
+
+/* ── 24. RESPONSIVE BREAKPOINTS ─────────────────────────────────────────────
+
+   Mobile-first: submissions primarily come from phones.
+   Tested targets: iPhone SE (375), iPhone 14 (390), Android typical (360–414)
+   ─────────────────────────────────────────────────────────────────────────── */
+
+
+/* ── ≤1023px  Tablet & below ─────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+
+  body {
+    padding: var(--sp4) var(--sp3) var(--sp6);
+    align-items: flex-start;
+  }
+
+  .app-container {
+    padding: 0;
+    gap: var(--sp4);
+  }
+
+  .app-main-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: var(--sp4);
+  }
+
+  /* Chatbot is primary — lead capture happens here */
+  .chatbot-panel { order: 1; min-height: 520px; }
+  .strategy-panel { order: 2; }
+}
+
+
+/* ── ≤767px  Mobile landscape + large portrait phones ─────────────────────── */
+@media (max-width: 767px) {
+
+  body { padding: var(--sp3) var(--sp3) var(--sp5); }
+
+  /* Cards feel more native at a tighter radius on phone */
+  .glass-card {
+    border-radius: var(--r-lg);   /* 20px instead of 26px */
+  }
+
+  .glass-card::before {
+    left: var(--r-lg);
+    right: var(--r-lg);
+  }
+
+  /* Compact strategy dashboard — users scroll to this after chatbot */
+  .strategy-panel {
+    padding: var(--sp4);
+    gap: var(--sp4);
+  }
+
+  /* Shrink gauge to save vertical space */
+  .gauge-ring {
+    transform: scale(0.82);
+    transform-origin: center;
+  }
+
+  .readiness-gauge-container { gap: var(--sp2); }
+
+  /* Horizontal layout: gauge on left, metrics on right on landscape */
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .col-span-2 { grid-column: span 2; }
+
+  .chatbot-panel { min-height: 480px; }
+}
+
+
+/* ── ≤480px  Portrait mobile — primary traffic ──────────────────────────── */
+@media (max-width: 480px) {
+
+  /* Edge-to-edge layout — cards fill the full width */
+  body {
+    padding: var(--sp2) 0 0;
+    background-attachment: local;  /* performance: don't repaint bg on scroll */
+  }
+
+  /* Disable heavy backdrop-filter on low-end mobile for performance */
+  .glass-card {
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-radius: var(--r-md);   /* 14px — tighter on small screens */
+  }
+
+  .glass-card::before {
+    left: var(--r-md);
+    right: var(--r-md);
+  }
+
+  .app-container {
+    gap: var(--sp3);
+    min-height: 100svh;
+  }
+
+  /* ── Header ── */
+  .app-header {
+    padding: var(--sp3) var(--sp4) var(--sp4);
+    border-bottom: none;
+    gap: var(--sp2);
+  }
+
+  .header-logo { font-size: 1.0rem; }
+  .logo-sep, .logo-main { display: none; }  /* Just "ADMIZ" on mobile */
+
+  .header-status { padding: 5px 10px; }
+  .status-text   { display: none; }         /* Just the green dot */
+
+  /* ── Chatbot panel: feels like a native chat app ── */
+  .chatbot-panel {
+    min-height: calc(100svh - 72px);  /* nearly full viewport height */
+    border-radius: var(--r-md);
+  }
+
+  .chat-header {
+    padding: var(--sp3) var(--sp4);
+  }
+
+  .agent-avatar { width: 34px; height: 34px; }
+
+  .agent-info h3 { font-size: 0.85rem; }
+  .agent-info p  { font-size: 0.68rem; }
+
+  /* Chat body — comfortable reading on phones */
+  .chat-body {
+    padding: var(--sp4);
+    gap: var(--sp3);
+  }
+
+  .chat-message { max-width: 88%; }
+
+  .message-bubble {
+    font-size: 0.86rem;
+    padding: 10px 13px;
+  }
+
+  /* Controls — sit at thumb zone (bottom of screen) */
+  .chat-controls-area {
+    padding: var(--sp3) var(--sp4);
+    /* iPhone home bar safe area */
+    padding-bottom: max(var(--sp4), env(safe-area-inset-bottom));
+  }
+
+  /* ── Option Buttons: full comfort touch targets ── */
+  .options-container {
+    gap: var(--sp2);
+  }
+
+  .option-btn {
+    /* 44px min height = iOS / Android recommended touch target */
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    border-radius: var(--r-md);    /* rounded rect feels more native */
+    white-space: normal;            /* allow wrapping for long labels */
+    line-height: 1.35;
+  }
+
+  /* ── Text input: MUST be ≥16px to prevent iOS auto-zoom ── */
+  .text-input {
+    font-size: 16px !important;     /* critical — iOS Safari zooms if < 16px */
+    padding: 12px 14px;
+    border-radius: var(--r-sm);
+    min-height: 44px;
+  }
+
+  .send-btn {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-sm);
+  }
+
+  /* ── Lead form: generous touch targets ── */
+  .lead-form-grid { gap: var(--sp3); }
+
+  .lead-form-group { gap: var(--sp2); }
+
+  .lead-form-group label { font-size: 0.70rem; }
+
+  /* Form inputs must also be ≥16px */
+  .lead-form-grid .text-input {
+    font-size: 16px !important;
+    min-height: 48px;              /* bigger tap target for primary action */
+  }
+
+  /* Submit button — full width, prominent */
+  #submit-lead-btn {
+    min-height: 52px !important;
+    font-size: 0.90rem !important;
+    border-radius: var(--r-md) !important;
+    margin-top: var(--sp2) !important;
+  }
+
+  /* ── Dashboard: compact secondary panel ── */
+  .strategy-panel {
+    padding: var(--sp4);
+    gap: var(--sp3);
+  }
+
+  .panel-header h2 { font-size: 0.95rem; }
+  .panel-intro     { font-size: 0.76rem; }
+
+  /* ── Social Proof Strip: compact 3-column ── */
+  .proof-strip {
+    padding: var(--sp3) var(--sp4);
+    gap: 0;
+    border-radius: var(--r-md);
+  }
+
+  .proof-item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .proof-number {
+    font-size: 1.2rem;
+  }
+
+  .proof-prefix,
+  .proof-unit {
+    font-size: 0.75rem;
+  }
+
+  .proof-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.01em;
+  }
+
+  .proof-divider {
+    height: 24px;
+    margin: 0 var(--sp2);
+  }
+
+  /* ── Slot Badge: shorten text on small screens ── */
+  .slot-badge {
+    padding: 4px 8px;
+    font-size: 0.62rem;
+  }
+
+  /* ── Results Ticker: no fade mask on mobile (cleaner) ── */
+  .ticker-viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .ticker-item { font-size: 0.70rem; }
+  .ticker-niche { font-size: 0.70rem; }
+
+  /* Gauge: smaller ring, horizontal alignment */
+  .readiness-gauge-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--sp4);
+    padding: 0;
+  }
+
+  .gauge-ring {
+    transform: scale(0.72);
+    transform-origin: center left;
+    flex-shrink: 0;
+  }
+
+  .gauge-label {
+    font-size: 0.65rem;
+    text-align: left;
+  }
+
+  /* Metrics: 2 columns on mobile still works */
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp2);
+  }
+
+  .col-span-2 { grid-column: span 2; }
+
+  .glass-subcard { padding: var(--sp3); }
+
+  .metric-value        { font-size: 1.1rem; }
+  .metric-value.value-small { font-size: 0.76rem; }
+
+  /* Insights box: tighter */
+  .insight-text { font-size: 0.75rem; }
+}
+
+
+/* ── ≤380px  Small phones (iPhone SE, Galaxy A series) ──────────────────── */
+@media (max-width: 380px) {
+
+  .option-btn {
+    font-size: 0.79rem;
+    padding: 9px 12px;
+  }
+
+  .message-bubble { font-size: 0.83rem; }
+
+  .agent-info h3 { font-size: 0.80rem; }
+
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Gauge even smaller */
+  .gauge-ring { transform: scale(0.65); }
+}
+
+
+/* ── Safe area for any phone with a notch / Dynamic Island ─────────────── */
+@supports (padding: max(0px)) {
+  .chat-controls-area {
+    padding-bottom: max(var(--sp4), env(safe-area-inset-bottom));
+  }
+
+  body {
+    padding-left:  max(var(--sp3), env(safe-area-inset-left));
+    padding-right: max(var(--sp3), env(safe-area-inset-right));
+  }
+}
+
+
+/* ── 25. REDUCED MOTION PREFERENCE ─────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+  }
+}
+

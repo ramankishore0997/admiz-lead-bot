@@ -1,0 +1,16 @@
+{
+  "name": "admiz-lead-bot",
+  "version": "1.0.0",
+  "description": "Premium lead generation chatbot for ADMIZ Agency",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y browser-sync start --server --files \"index.html, index.css, app.js\""
+  },
+  "keywords": [
+    "chatbot",
+    "meta-ads",
+    "lead-generation"
+  ],
+  "author": "ADMIZ Agency",
+  "license": "ISC"
+}

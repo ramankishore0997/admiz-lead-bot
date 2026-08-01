@@ -1,0 +1,13 @@
+# Node / dev tools (browser-sync cache etc.)
+node_modules/
+.cache/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.log

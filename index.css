@@ -7,31 +7,31 @@
 /* ── 0. DESIGN TOKENS ──────────────────────────────────────────────────── */
 :root {
 
-  /* Surface Hierarchy (dark → light) */
-  --bg-base        : #0c0c11;           /* page base — deep cool dark   */
-  --surface-0      : rgba(255,255,255, 0.015);
-  --surface-1      : rgba(255,255,255, 0.030);
-  --surface-2      : rgba(255,255,255, 0.048);
-  --surface-3      : rgba(255,255,255, 0.070);
+  /* Surface Hierarchy — pure black base */
+  --bg-base        : #050507;           /* near-pure black with micro violet cast */
+  --surface-0      : rgba(255,255,255, 0.025);
+  --surface-1      : rgba(255,255,255, 0.042);
+  --surface-2      : rgba(255,255,255, 0.062);
+  --surface-3      : rgba(255,255,255, 0.088);
 
-  /* Glass System */
-  --glass          : rgba(10, 10, 16, 0.60);
-  --glass-border   : rgba(255, 255, 255, 0.068);
-  --glass-hover    : rgba(255, 255, 255, 0.110);
-  --glass-active   : rgba(255, 255, 255, 0.190);
-  --glass-specular : rgba(255, 255, 255, 0.060);   /* top-edge shimmer  */
+  /* Glass System — tuned for black */
+  --glass          : rgba(5, 5, 10, 0.65);
+  --glass-border   : rgba(255, 255, 255, 0.09);
+  --glass-hover    : rgba(255, 255, 255, 0.14);
+  --glass-active   : rgba(255, 255, 255, 0.22);
+  --glass-specular : rgba(255, 255, 255, 0.07);
 
-  /* Brand — warm sienna / copper */
-  --brand          : #c2775d;
-  --brand-light    : #d9947a;
-  --brand-dim      : rgba(194, 119, 93,  0.10);
-  --brand-glow     : rgba(194, 119, 93,  0.22);
+  /* Brand — electric violet / purple */
+  --brand          : #8b5cf6;           /* Violet 500  */
+  --brand-light    : #a78bfa;           /* Violet 400  */
+  --brand-dim      : rgba(139, 92, 246, 0.10);
+  --brand-glow     : rgba(139, 92, 246, 0.35);
 
-  /* Emerald — success / data positive */
+  /* Emerald — success / data positive (unchanged) */
   --emerald        : #10b981;
   --emerald-light  : #34d399;
   --emerald-dim    : rgba(16,  185, 129, 0.09);
-  --emerald-glow   : rgba(16,  185, 129, 0.20);
+  --emerald-glow   : rgba(16,  185, 129, 0.22);
 
   /* Indigo — budget / retargeting */
   --indigo         : #6477e8;
@@ -40,24 +40,24 @@
   /* Error */
   --error          : #f43f5e;
 
-  /* Neutral scale — warm-tinted grays */
+  /* Neutral scale — cool, no warm tint */
   --n0  : #ffffff;
-  --n50 : #eae6e0;   /* primary text */
-  --n100: #c5c0b9;   /* secondary text */
-  --n300: #7d786f;   /* muted */
-  --n500: #47433d;   /* very muted / hairlines */
-  --n700: #221f1b;   /* deep card surfaces */
-  --n900: #100d0a;   /* darkest local surface */
+  --n50 : #ede9ff;   /* very slightly violet-tinted — feels premium, not cold */
+  --n100: #b8b4cc;   /* secondary text */
+  --n300: #696578;   /* muted */
+  --n500: #3e3b50;   /* very muted / hairlines */
+  --n700: #181620;   /* deep card surfaces */
+  --n900: #0a090f;   /* darkest */
 
-  /* Typography */
+  /* Typography (unchanged) */
   --font-display : 'Outfit', 'SF Pro Display', system-ui, -apple-system, sans-serif;
   --font-body    : 'Inter',  'SF Pro Text',    system-ui, -apple-system, sans-serif;
 
-  /* Spacing — 4px base grid */
+  /* Spacing — 4px base grid (unchanged) */
   --sp1:  4px;  --sp2:  8px;  --sp3: 12px;  --sp4: 16px;
   --sp5: 20px;  --sp6: 24px;  --sp8: 32px;  --sp10: 40px;
 
-  /* Border radius */
+  /* Border radius (unchanged) */
   --r-xs   : 6px;
   --r-sm   : 10px;
   --r-md   : 14px;
@@ -65,36 +65,36 @@
   --r-xl   : 26px;
   --r-pill : 999px;
 
-  /* Easing curves */
-  --ease        : cubic-bezier(0.16, 1, 0.3, 1);       /* fast-out-slow-in */
-  --ease-spring : cubic-bezier(0.34, 1.56, 0.64, 1);   /* slight overshoot */
-  --ease-std    : cubic-bezier(0.4, 0, 0.2, 1);         /* material std     */
+  /* Easing curves (unchanged) */
+  --ease        : cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring : cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-std    : cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Card Shadow — layered depth */
+  /* Card Shadow — tuned for black background */
   --card-shadow:
     0 1px  0   0   var(--glass-specular) inset,
     0 0    0   1px var(--glass-border),
-    0 2px  6px     rgba(0, 0, 0, 0.35),
-    0 8px  28px    rgba(0, 0, 0, 0.38),
-    0 40px 100px   rgba(0, 0, 0, 0.30);
+    0 2px  6px     rgba(0, 0, 0, 0.6),
+    0 8px  28px    rgba(0, 0, 0, 0.55),
+    0 40px 100px   rgba(0, 0, 0, 0.45);
 
   /* Subcard shadow */
   --sub-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.30),
-    0 4px 12px rgba(0, 0, 0, 0.20);
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.35);
 
   /* Glow effects */
-  --glow-brand   : 0 0 16px var(--brand-glow),   0 0 4px var(--brand-dim);
+  --glow-brand   : 0 0 20px var(--brand-glow),   0 0 6px var(--brand-dim);
   --glow-emerald : 0 0 14px var(--emerald-glow),  0 0 4px var(--emerald-dim);
 
   /* ── Legacy aliases — keeps JS inline styles working without changes ── */
-  --accent-copper      : var(--brand);
-  --accent-copper-glow : var(--brand-glow);   /* used in insight card highlight */
+  --accent-copper      : var(--brand);             /* now resolves to violet   */
+  --accent-copper-glow : var(--brand-glow);
   --accent-emerald     : var(--emerald);
   --accent-red         : var(--error);
   --border-color       : var(--glass-border);
-  --text-dark          : #060509;
-  --text-muted         : var(--n300);         /* used in leads metric span      */
+  --text-dark          : #08060f;
+  --text-muted         : var(--n300);
 }
 
 
@@ -141,21 +141,20 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/* Layer 2: Subtle dot grid (Vercel / Linear aesthetic) */
+/* Layer 2: Subtle dot grid — violet-tinted for purple theme */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(139, 92, 246, 0.10) 1px, transparent 1px);
   background-size: 30px 30px;
-  /* Vignette the grid so it fades at edges */
   -webkit-mask-image:
     radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 100%);
   mask-image:
     radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 100%);
-  opacity: 0.22;
+  opacity: 0.30;
 }
 
 /* Background ambient glow canvas — sits behind everything */
@@ -174,32 +173,77 @@ body::after {
   will-change: transform;
 }
 
-/* Warm copper light — upper left quadrant */
+/* Warm copper light — upper left → now: soft violet */
 .bg-glow--warm {
-  width: 60vw;
-  height: 60vw;
-  top: -18%;
-  left: -12%;
+  width: 55vw;
+  height: 55vw;
+  top: -15%;
+  left: -8%;
   background: radial-gradient(circle,
-    rgba(194, 119, 93, 0.10) 0%,
-    rgba(194, 119, 93, 0.04) 40%,
+    rgba(139, 92, 246, 0.10) 0%,
+    rgba(109, 40, 217, 0.04) 45%,
     transparent 70%
   );
   animation: floatWarm 26s ease-in-out infinite;
 }
 
-/* Cool indigo light — lower right */
+/* Cool indigo light — lower right → deep purple */
 .bg-glow--cool {
-  width: 55vw;
-  height: 55vw;
-  bottom: -18%;
-  right: -12%;
+  width: 50vw;
+  height: 50vw;
+  bottom: -15%;
+  right: -8%;
   background: radial-gradient(circle,
-    rgba(100, 119, 232, 0.07) 0%,
-    rgba(16, 185, 129, 0.03) 45%,
+    rgba(88, 28, 235, 0.07) 0%,
+    rgba(67, 20, 180, 0.03) 45%,
     transparent 70%
   );
   animation: floatCool 30s ease-in-out infinite reverse;
+}
+
+/* ── Adversify-style Planet / Globe Orb ─────────────────────────────────── */
+
+.bg-orb {
+  position: fixed;
+  bottom: -55%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(860px, 110vw);
+  height: min(860px, 110vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 52%,
+    #0c0733 0%,       /* dark core */
+    #1a0b60 22%,      /* deep indigo */
+    #2e1190 42%,      /* mid purple */
+    #5b21b6 60%,      /* violet */
+    #7c3aed 72%,      /* bright violet edge */
+    rgba(139, 92, 246, 0.45) 80%,
+    transparent 90%
+  );
+  filter: blur(18px);
+  z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Upward violet atmospheric glow — the light the orb casts on the scene */
+.bg-orb-glow {
+  position: fixed;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 55vh;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 100%,
+    rgba(109, 40, 217, 0.22) 0%,
+    rgba(88, 28, 200, 0.10) 45%,
+    transparent 75%
+  );
+  filter: blur(45px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 @keyframes floatWarm {
@@ -651,7 +695,7 @@ body::after {
   z-index: 0;
 }
 
-/* Animated gradient ring around the avatar — "alive" feel */
+/* Animated gradient ring around the avatar — violet theme */
 .avatar-ring {
   position: absolute;
   inset: -2px;
@@ -663,7 +707,7 @@ body::after {
     var(--emerald) 100%
   );
   z-index: -1;
-  opacity: 0.5;
+  opacity: 0.55;
   animation: avatarRing 4s ease-in-out infinite alternate;
 }
 
@@ -699,7 +743,7 @@ body::after {
 .chat-progress-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 45%, var(--emerald) 100%);
+  background: linear-gradient(90deg, #6d28d9 0%, var(--brand) 50%, var(--emerald) 100%);
   transition: width 0.55s var(--ease);
   position: relative;
 }
@@ -779,14 +823,13 @@ body::after {
   border-top-left-radius: 4px;
 }
 
-/* User bubble — warm brand gradient */
+/* User bubble — electric violet gradient */
 .user .message-bubble {
-  background: linear-gradient(145deg, var(--brand) 0%, #a25944 100%);
-  color: #ffe8dc;
+  background: linear-gradient(145deg, var(--brand) 0%, #6d28d9 100%);
+  color: #f0edff;
   border-top-right-radius: 4px;
   font-weight: 500;
-  /* Subtle glow that communicates "sent" confidence */
-  box-shadow: 0 2px 10px rgba(194, 119, 93, 0.22);
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.25);
 }
 
 .message-time {
@@ -1173,9 +1216,8 @@ body::after {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: var(--n0);
+  color: var(--brand-light);    /* violet — stands out on black */
   font-variant-numeric: tabular-nums;
-  /* Counts up from 0 — JS will update this */
 }
 
 .proof-prefix,
@@ -1183,7 +1225,7 @@ body::after {
   font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--brand-light);
+  color: var(--brand);
 }
 
 .proof-unit { margin-left: 1px; }
